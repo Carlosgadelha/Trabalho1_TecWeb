@@ -195,4 +195,15 @@ function colidiu(passaro, barreiras) {
         }, 20)
     }
 }
- new FlappyBird().start() 
+
+function configuracoes(){
+
+   if( document.querySelector(`#Diurno`).checked){
+        new FlappyBird().start() 
+   }else if(document.querySelector(`#Nortuno`).checked){
+
+   }
+   
+}
+ 
+ new configuracoes();
