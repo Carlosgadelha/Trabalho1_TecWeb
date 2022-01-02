@@ -168,14 +168,14 @@ function colidiu(passaro, barreiras) {
 
 }
 
- function FlappyBird() {
+ function FlappyBird(abertura_canos, velocidade) {
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
     const altura = areaDoJogo.clientHeight
     const largura = areaDoJogo.clientWidth
 
     const progresso = new Progresso()
-    const barreiras = new Barreiras(altura, largura, 200, 400,
+    const barreiras = new Barreiras(altura, largura, abertura_canos, 400,
         () => progresso.atualizarPontos(++pontos))
 
     const passaro = new Passaro(altura)
@@ -191,27 +191,24 @@ function colidiu(passaro, barreiras) {
 
               if(colidiu(passaro,barreiras)){
                  clearInterval(temporizador) 
+                 //const areaDoJogo = document.querySelector('[wm-flappy]')
+                 areaDoJogo.removeChild(progresso.elemento)
+                 areaDoJogo.removeChild(passaro.elemento)
+                 barreiras.pares.forEach(par => areaDoJogo.removeChild(par.elemento))
+                 //document.location.reload(true);
              } 
-        }, 20)
+        },velocidade)
     }
 }
 
-function configuracoes(){
-
-   if( document.querySelector(`#Diurno`).checked){
-       //new setTheme('dark'); 
-        new FlappyBird().start()
-        
-   }else if(document.querySelector(`#Nortuno`).checked){
-        
-   }
-   
-}
 
 document.addEventListener('DOMContentLoaded', () => {
+
       const darkModeStorage = localStorage.getItem('dark-mode')
       const html = document.querySelector('html')
       const inputDarkMode = document.getElementById('input-dark-mode')
+      const inputLightMode = document.getElementById('input-light-mode')
+      
 
       if(darkModeStorage){
         html.setAttribute("dark", "true")
@@ -221,12 +218,52 @@ document.addEventListener('DOMContentLoaded', () => {
         if(inputDarkMode.checked){
           html.setAttribute("dark", "true")
           localStorage.setItem('dark-mode', true)
-        }else{
-          html.removeAttribute("dark")
-          localStorage.removeItem('dark-mode')
         }
       })
 
+      inputLightMode.addEventListener('change', () => {
+        if(inputLightMode.checked){
+            html.removeAttribute("dark")
+            localStorage.removeItem('dark-mode')
+          
+        }
+        })
+
+ 
+         
+
     })
  
- new configuracoes();
+    const button = document.querySelector('input')
+    const velocidade = document.querySelector('select')
+    
+    const input_abertura_facil = document.getElementById('abertura_facil')
+    const input_abertura_media = document.getElementById('abertura_media')
+    const input_abertura_dificil = document.getElementById('abertura_dificil')
+
+    function iniciar(){
+        let valor_velocidade = 0;
+        switch(velocidade.value){
+            
+            case 'lenta':
+                valor_velocidade = 40;
+                break;
+
+            case 'normal':
+                valor_velocidade = 20;
+                break;
+
+            case 'rapida':
+                valor_velocidade = 10;
+                break;
+            
+        }
+        
+        if(input_abertura_facil.checked){
+            new FlappyBird(300,valor_velocidade).start()
+        }else if(input_abertura_media.checked){
+            new FlappyBird(250,valor_velocidade).start()
+        }else{
+            new FlappyBird(200,valor_velocidade).start()
+        }
+    } 

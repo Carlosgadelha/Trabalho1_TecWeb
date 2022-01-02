@@ -38,19 +38,14 @@
 
                <tr> 
                    <td> Cenário do Jogo </td>
-                   <label for="input-dark-mode">
-                    <a class="button">Modo dark</a>
-                   </label>
-                  <input type="checkbox" id="input-dark-mode">
-                  
                    <td>
                        <div>
-                       <input type="radio" id="Noturno" name="dronee" value="Noturno">
-                       <label for="Noturno">Nortuno</label>
+                       <input type="radio" id="input-dark-mode" name="dronee" value="Noturno">
+                       <label for="input-dark-mode">Nortuno</label>
 
-                       <input type="radio" id="Diurno" name="dronee" value="Diurno"
-                              checked>
-                       <label for="Diurno">Diurno</label>
+                       <input type="radio" id="input-light-mode" name="dronee" value="Diurno" 
+                       checked>
+                       <label for="input-light-mode">Diurno</label>
                        </div>
        
                    </td>
@@ -58,26 +53,43 @@
                </tr>
 
                <tr> 
-                <td> Escolha o periodo </td>
+                <td> Intervalo entre as aberturas dos canos</td>
                 <td>
                     <div>
-                    <input type="radio" id="Manhã" name="drone" value="Manhã"
-                            >
-                    <label for="Manhã">Manhã</label>
+                        
+                        <input type="radio" id="abertura_facil" name="abertura_canos">
+                        <label for="abertura_facil">Facil</label>
+
+                    </div>
+
+                    <div>
+                        <input type="radio" id="abertura_media" name="abertura_canos">
+                        <label for="abertura_media">Media</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="abertura_dificil" name="abertura_canos" checked>
+                        <label for="abertura_dificil">Dificil</label>
+
                     </div>
     
-                    <div>
-                    <input type="radio" id="Tarde" name="drone" value="Tarde">
-                    <label for="Tarde">Tarde</label>
-                    </div>
-    
-                    <div>
-                    <input type="radio" id="Noite" name="drone" value="Noite">
-                    <label for="Noite">Noite</label>
-                    </div>
                 </td>
     
             </tr>
+            <tr> 
+                <td> Velocidade </td>
+    
+                <td>
+                    <select id="velocidade-select">
+    
+                        <option></option>
+                        <option>lenta</option>
+                        <option>normal</option>
+                        <option>rapida</option>
+    
+                </td>			 
+            </tr>
+
                <t>
                    <td> Apresentação </td>
                    <td> <input type="text" id="name" name="name" required minlength="4" maxlength="300" size="20">
@@ -87,10 +99,10 @@
                <td>
                    <td> </td>
                    <td>
-                       <a href="confirmacao.html">
-                           <button > Enviar </button>
-                       </a>
-                       
+                    
+                        <button onclick="iniciar()">Iniciar</button>
+                   
+                                              
                    </td>
                    
                </td>

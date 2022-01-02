@@ -25,10 +25,25 @@ html[dark] .configuracao {
     color: white;
   }
 
-
+  html[dark] .conteudo [wm-flappy]  {
+    background-color: black;
+    border: 5px solid yellow;
+    color: white;
+  }
+  html[dark] .barreira .borda {
+    background: linear-gradient(90deg, #ffffff, #515250);
+    
+  }
+  html[dark] .barreira .corpo {
+    background: linear-gradient(90deg, #ffffff, #515250);
+    
+  }
+  
+  
 
   html[dark] .button{
     color: white;
+
   }
 
 
