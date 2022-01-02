@@ -10,14 +10,31 @@
     box-sizing: border-box;
 }
 
-html {
-    height: 100%;
-}
+html[dark]{
+    background-color: black;
+
+  }
+
+html[dark] .conteudo h1{
+    color: white;
+  }
+
+html[dark] .configuracao {
+    background-color: black;
+    border: 5px solid yellow;
+    color: white;
+  }
+
+
+
+  html[dark] .button{
+    color: white;
+  }
+
 
 body {
     margin: 0;
-    background-color: #0D262D;
-    color: #fff;
+
     height: 100%;
 }
 
@@ -49,7 +66,7 @@ body {
     overflow: hidden;
 }
 
-[configuracao] {
+.configuracao {
     position: absolute;
     top: 15%;
     right: 0%;

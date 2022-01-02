@@ -199,11 +199,34 @@ function colidiu(passaro, barreiras) {
 function configuracoes(){
 
    if( document.querySelector(`#Diurno`).checked){
-        new FlappyBird().start() 
+       //new setTheme('dark'); 
+        new FlappyBird().start()
+        
    }else if(document.querySelector(`#Nortuno`).checked){
-
+        
    }
    
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+      const darkModeStorage = localStorage.getItem('dark-mode')
+      const html = document.querySelector('html')
+      const inputDarkMode = document.getElementById('input-dark-mode')
+
+      if(darkModeStorage){
+        html.setAttribute("dark", "true")
+      }
+
+      inputDarkMode.addEventListener('change', () => {
+        if(inputDarkMode.checked){
+          html.setAttribute("dark", "true")
+          localStorage.setItem('dark-mode', true)
+        }else{
+          html.removeAttribute("dark")
+          localStorage.removeItem('dark-mode')
+        }
+      })
+
+    })
  
  new configuracoes();
