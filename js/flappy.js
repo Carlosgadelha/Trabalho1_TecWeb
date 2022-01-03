@@ -195,7 +195,14 @@ function colidiu(passaro, barreiras) {
 
 }
 
- function FlappyBird(abertura_canos, velocidade, pontuacao, intervalo_canos,subir,descer) {
+ function FlappyBird() {
+    
+    const velocidade = velocidadeJogo();
+    const valor_pontuacao = pontuacao();
+    const intervalo_canos =  intervalo();
+    const [subir, descer] = velocidadePersonagem();
+    const abertura_canos = abertura();
+
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
     const altura = areaDoJogo.clientHeight
@@ -203,7 +210,7 @@ function colidiu(passaro, barreiras) {
 
     const progresso = new Progresso()
     const barreiras = new Barreiras(altura, largura, abertura_canos, intervalo_canos,
-        () => progresso.atualizarPontos(pontos += pontuacao))
+        () => progresso.atualizarPontos(pontos += valor_pontuacao))
 
     const passaro = new Passaro(altura,subir,descer)
 
@@ -213,6 +220,8 @@ function colidiu(passaro, barreiras) {
 
     this.start = () => {
         const inputModeReal = document.getElementById('input-modo-real')
+        const nome = document.getElementById('nome');
+
         if(inputModeReal.checked != true) alert(`Para sair do modo de treino selecione o modo Real em configurações`);
         const temporizador = setInterval(() => {
             barreiras.animar()
@@ -225,7 +234,7 @@ function colidiu(passaro, barreiras) {
                  areaDoJogo.removeChild(progresso.elemento)
                  areaDoJogo.removeChild(passaro.elemento)
                  barreiras.pares.forEach(par => areaDoJogo.removeChild(par.elemento))
-                 alert(` Sua pontuação foi ${pontos}`);
+                 alert(` ${nome.value} sua pontuação foi ${pontos}`);
                  //document.location.reload(true);*/
              } else{
 
@@ -234,18 +243,141 @@ function colidiu(passaro, barreiras) {
     }
 }
 
+function velocidadeJogo (){
+
+    let valor_velocidade = 0;
+    const velocidade = document.getElementById('velocidade-select');
+
+    switch(velocidade.value){
+            
+        case '1':
+            valor_velocidade = 40;
+            break;
+
+        case '2':
+            valor_velocidade = 35;
+            break;
+
+        case '3':
+            valor_velocidade = 30;
+            break; 
+                
+        case '4':
+            valor_velocidade = 25;
+            break;
+
+        case '5':
+            valor_velocidade = 20;
+            break;
+
+        case '6':
+            valor_velocidade = 18;
+            break; 
+            
+        case '7':
+            valor_velocidade = 16;
+            break;
+
+        case '8':
+            valor_velocidade = 14;
+            break;
+
+        case '9':
+            valor_velocidade = 12;
+            break;
+
+        case '10':
+            valor_velocidade = 10;
+            break; 
+    }
+    return valor_velocidade;
+
+}
+
+function pontuacao (){
+    let valor_pontuacao = 1;
+    const pontuacao = document.getElementById('pontuacao-select')
+
+    if(pontuacao.value != 1){
+        valor_pontuacao = (pontuacao.value == 10)? valor_pontuacao = 10: valor_pontuacao = 100
+   }
+
+   return valor_pontuacao;
+
+}
+
+function intervalo (){
+
+    let valor_intervalo = 400;
+
+    const input_intervalo_facil = document.getElementById('intervalo_facil');
+    const input_intervalo_normal = document.getElementById('intervalo_normal');
+    const input_intervalo_dificil = document.getElementById('intervalo_dificil');
+
+    if(input_intervalo_normal.checked != true){
+        valor_intervalo = (input_intervalo_facil.checked == true)? valor_intervalo = 600: valor_intervalo = 200
+    }
+
+    return valor_intervalo
+
+}
+
+function velocidadePersonagem (){
+
+    let subir = 0;
+    let descer = 0;
+
+    const velocidade_personagem = document.getElementById('velocidade-personagem-select')
+
+    switch(velocidade_personagem.value){
+            
+        case 'lento':
+            subir = 4;
+            descer = -3;
+            break;
+
+        case 'normal':
+            subir = 8;
+            descer = -5;
+            break;
+
+        case 'rapido':
+            subir = 12;
+            descer = -7;
+            break; 
+    }
+    
+    return [subir, descer];
+
+}
+
+function abertura(){
+
+    let valor_abertura = 300;
+    
+    const input_abertura_facil = document.getElementById('abertura_facil');
+    const input_abertura_media = document.getElementById('abertura_media');
+    //const input_abertura_dificil = document.getElementById('abertura_dificil');
+
+    
+    if(input_abertura_facil.checked != true){
+        valor_abertura =  (input_abertura_media.checked == true)? valor_abertura = 250 : valor_abertura = 200;
+    }
+    return valor_abertura;
+
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
-      const darkModeStorage = localStorage.getItem('dark-mode')
+      //const darkModeStorage = localStorage.getItem('dark-mode')
       const html = document.querySelector('html')
       const inputDarkMode = document.getElementById('input-dark-mode')
       const inputLightMode = document.getElementById('input-light-mode')
       
-
+      /*
       if(darkModeStorage){
         html.setAttribute("dark", "true")
-      }
+      } */
 
       inputDarkMode.addEventListener('change', () => {
         if(inputDarkMode.checked){
@@ -260,111 +392,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('dark-mode')
           
         }
-        })
+        })   
 
- 
-         
+})
 
-    })
- 
-    const button = document.querySelector('input')
-    const velocidade = document.getElementById('velocidade-select')
-    const velocidade_personagem = document.getElementById('velocidade-personagem-select')
-    const pontuacao = document.getElementById('pontuacao-select')
-    
-    
-    const input_abertura_facil = document.getElementById('abertura_facil')
-    const input_abertura_media = document.getElementById('abertura_media')
-    const input_abertura_dificil = document.getElementById('abertura_dificil')
+function iniciar(){
 
-    const input_intervalo_facil = document.getElementById('intervalo_facil')
-    const input_intervalo_normal = document.getElementById('intervalo_normal')
-    const input_intervalo_dificil = document.getElementById('intervalo_dificil')
+    new FlappyBird().start()
 
-    function iniciar(){
-        let valor_velocidade = 0;
-        let valor_pontuacao = 1;
-        let intervalo = 400;
-        let subir = 0;
-        let descer = 0;
-
-
-        if(input_intervalo_normal.checked != true){
-            intervalo = (input_intervalo_facil.checked == true)? intervalo = 600: intervalo = 200
-        }
-
-        if(pontuacao.value != 1){
-             valor_pontuacao = (pontuacao.value == 10)? valor_pontuacao = 10: valor_pontuacao = 100
-        }
-
-
-        switch(velocidade_personagem.value){
-            
-            case 'lento':
-                subir = 4;
-                descer = -3;
-                break;
-
-            case 'normal':
-                subir = 8;
-                descer = -5;
-                break;
-    
-            case 'rapido':
-                subir = 12;
-                descer = -7;
-                break; 
-        }
-
-        switch(velocidade.value){
-            
-            case '1':
-                valor_velocidade = 40;
-                break;
-
-            case '2':
-                valor_velocidade = 35;
-                break;
-    
-            case '3':
-                valor_velocidade = 30;
-                break; 
-                    
-            case '4':
-                valor_velocidade = 25;
-                break;
-
-            case '5':
-                valor_velocidade = 20;
-                break;
-
-            case '6':
-                valor_velocidade = 18;
-                break; 
-                
-            case '7':
-                valor_velocidade = 16;
-                break;
-
-            case '8':
-                valor_velocidade = 14;
-                break;
-
-            case '9':
-                valor_velocidade = 12;
-                break;
-
-            case '10':
-                valor_velocidade = 10;
-                break;
-            
-        }
-        
-        if(input_abertura_facil.checked){
-            new FlappyBird(300,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
-        }else if(input_abertura_media.checked){
-            new FlappyBird(250,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
-        }else{
-            new FlappyBird(200,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
-        }
-    } 
+} 
