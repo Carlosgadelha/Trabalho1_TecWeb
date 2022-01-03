@@ -83,12 +83,38 @@ setInterval(() => {
     barreiras.animar()
 },20)  */
 
+function personagens(){
+    const personagen = document.getElementById('personagens-select')
+    switch(personagen.value){
+            
+        case 'passaro':
+            return 'img/passaro.png'
+            break;
+
+        case 'stella':
+            return 'img/stella.png'
+            break;
+
+        case 'Red':
+            return 'img/red.png'
+            break;
+
+        case 'chuck':
+            return 'img/chuck.png'
+            break;
+        
+    }
+
+}
+
 
 function Passaro(alturaJogo) {
     let voando = false
 
+
+
     this.elemento = novoElemento('img', 'passaro')
-    this.elemento.src = 'img/passaro.png'
+    this.elemento.src = personagens();
 
     this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
     this.setY = y => this.elemento.style.bottom = `${y}px`
@@ -126,12 +152,13 @@ setInterval(() => {
 
 
  function Progresso() {
-
+    
     this.elemento = novoElemento('span', 'progresso')
     this.atualizarPontos = pontos => {
         this.elemento.innerHTML = pontos
     }
     this.atualizarPontos(0)
+  
 }
 
 /*  const barreiras = new Barreiras(700, 400, 200, 400)
@@ -168,7 +195,7 @@ function colidiu(passaro, barreiras) {
 
 }
 
- function FlappyBird(abertura_canos, velocidade) {
+ function FlappyBird(abertura_canos, velocidade, pontuacao) {
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
     const altura = areaDoJogo.clientHeight
@@ -176,7 +203,7 @@ function colidiu(passaro, barreiras) {
 
     const progresso = new Progresso()
     const barreiras = new Barreiras(altura, largura, abertura_canos, 400,
-        () => progresso.atualizarPontos(++pontos))
+        () => progresso.atualizarPontos(pontos += pontuacao))
 
     const passaro = new Passaro(altura)
 
@@ -185,18 +212,24 @@ function colidiu(passaro, barreiras) {
     barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))
 
     this.start = () => {
+        const inputModeReal = document.getElementById('input-modo-real')
+        if(inputModeReal.checked != true) alert(`Para sair do modo de treino selecione o modo Real em configurações`);
         const temporizador = setInterval(() => {
             barreiras.animar()
             passaro.animar()
 
-              if(colidiu(passaro,barreiras)){
+              if(colidiu(passaro,barreiras) && inputModeReal.checked){
                  clearInterval(temporizador) 
+                 //let pontos = progresso()
                  //const areaDoJogo = document.querySelector('[wm-flappy]')
                  areaDoJogo.removeChild(progresso.elemento)
                  areaDoJogo.removeChild(passaro.elemento)
                  barreiras.pares.forEach(par => areaDoJogo.removeChild(par.elemento))
-                 //document.location.reload(true);
-             } 
+                 alert(` Sua pontuação foi ${pontos}`);
+                 //document.location.reload(true);*/
+             } else{
+
+             }
         },velocidade)
     }
 }
@@ -235,7 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
  
     const button = document.querySelector('input')
-    const velocidade = document.querySelector('select')
+    const velocidade = document.getElementById('velocidade-select')
+    const pontuacao = document.getElementById('pontuacao-select')
+    
     
     const input_abertura_facil = document.getElementById('abertura_facil')
     const input_abertura_media = document.getElementById('abertura_media')
@@ -243,6 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function iniciar(){
         let valor_velocidade = 0;
+        let valor_pontuacao = 1;
+
+        if(pontuacao.value != 1){
+             valor_pontuacao = (pontuacao.value == 10)? valor_pontuacao = 10: valor_pontuacao = 100
+        }
+
         switch(velocidade.value){
             
             case 'lenta':
@@ -260,10 +301,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if(input_abertura_facil.checked){
-            new FlappyBird(300,valor_velocidade).start()
+            new FlappyBird(300,valor_velocidade,valor_pontuacao).start()
         }else if(input_abertura_media.checked){
-            new FlappyBird(250,valor_velocidade).start()
+            new FlappyBird(250,valor_velocidade,valor_pontuacao).start()
         }else{
-            new FlappyBird(200,valor_velocidade).start()
+            new FlappyBird(200,valor_velocidade,valor_pontuacao).start()
         }
     } 
