@@ -195,14 +195,14 @@ function colidiu(passaro, barreiras) {
 
 }
 
- function FlappyBird(abertura_canos, velocidade, pontuacao) {
+ function FlappyBird(abertura_canos, velocidade, pontuacao, intervalo_canos) {
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
     const altura = areaDoJogo.clientHeight
     const largura = areaDoJogo.clientWidth
 
     const progresso = new Progresso()
-    const barreiras = new Barreiras(altura, largura, abertura_canos, 400,
+    const barreiras = new Barreiras(altura, largura, abertura_canos, intervalo_canos,
         () => progresso.atualizarPontos(pontos += pontuacao))
 
     const passaro = new Passaro(altura)
@@ -276,9 +276,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const input_abertura_media = document.getElementById('abertura_media')
     const input_abertura_dificil = document.getElementById('abertura_dificil')
 
+    const input_intervalo_facil = document.getElementById('intervalo_facil')
+    const input_intervalo_normal = document.getElementById('intervalo_normal')
+    const input_intervalo_dificil = document.getElementById('intervalo_dificil')
+
     function iniciar(){
         let valor_velocidade = 0;
         let valor_pontuacao = 1;
+        let intervalo = 400;
+
+
+        if(input_intervalo_normal.checked != true){
+            intervalo = (input_intervalo_facil.checked == true)? intervalo = 600: intervalo = 200
+        }
 
         if(pontuacao.value != 1){
              valor_pontuacao = (pontuacao.value == 10)? valor_pontuacao = 10: valor_pontuacao = 100
@@ -286,25 +296,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch(velocidade.value){
             
-            case 'lenta':
+            case '1':
                 valor_velocidade = 40;
                 break;
 
-            case 'normal':
+            case '2':
+                valor_velocidade = 35;
+                break;
+    
+            case '3':
+                valor_velocidade = 30;
+                break; 
+                    
+            case '4':
+                valor_velocidade = 25;
+                break;
+
+            case '5':
                 valor_velocidade = 20;
                 break;
 
-            case 'rapida':
+            case '6':
+                valor_velocidade = 18;
+                break; 
+                
+            case '7':
+                valor_velocidade = 16;
+                break;
+
+            case '8':
+                valor_velocidade = 14;
+                break;
+
+            case '9':
+                valor_velocidade = 12;
+                break;
+
+            case '10':
                 valor_velocidade = 10;
                 break;
             
         }
         
         if(input_abertura_facil.checked){
-            new FlappyBird(300,valor_velocidade,valor_pontuacao).start()
+            new FlappyBird(300,valor_velocidade,valor_pontuacao,intervalo).start()
         }else if(input_abertura_media.checked){
-            new FlappyBird(250,valor_velocidade,valor_pontuacao).start()
+            new FlappyBird(250,valor_velocidade,valor_pontuacao,intervalo).start()
         }else{
-            new FlappyBird(200,valor_velocidade,valor_pontuacao).start()
+            new FlappyBird(200,valor_velocidade,valor_pontuacao, intervalo).start()
         }
     } 

@@ -63,12 +63,12 @@
                     </div>
 
                     <div>
-                        <input type="radio" id="abertura_media" name="abertura_canos">
+                        <input type="radio" id="abertura_media" name="abertura_canos" checked>
                         <label for="abertura_media">Media</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="abertura_dificil" name="abertura_canos" checked>
+                        <input type="radio" id="abertura_dificil" name="abertura_canos" >
                         <label for="abertura_dificil">Dificil</label>
 
                     </div>
@@ -91,13 +91,20 @@
             </tr>
 
             <tr> 
-                <td> Velocidade </td>
+                <td> Velocidade do Jogo</td>
     
                 <td>
                     <select id="velocidade-select">
-                        <option>normal</option>
-                        <option>lenta</option>
-                        <option>rapida</option>
+                        <option>5</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
     
                 </td>			 
             </tr>
@@ -113,8 +120,35 @@
                         <option>10</option>
                         <option>100</option>
     
-                </td>			 
+                </td>	
+
             </tr>
+
+            <tr> 
+                <td> Intervalo entre os canos</td>
+                <td>
+                    <div>
+                        
+                        <input type="radio" id="intervalo_facil" name="intervalo_canos">
+                        <label for="intervalo_facil">Facil</label>
+
+                    </div>
+
+                    <div>
+                        <input type="radio" id="intervalo_normal" name="intervalo_canos"checked>
+                        <label for="intervalo_normal">Normal</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="intervalo_dificil" name="intervalo_canos" >
+                        <label for="intervalo_dificil">Dificil</label>
+
+                    </div>
+    
+                </td>
+    
+            </tr>
+
 
             <tr> 
                 <td> Modo </td>
@@ -130,6 +164,20 @@
     
                 </td>
     
+            </tr>
+
+            <tr> 
+                <td> Velocidade do Personagem </td>
+    
+                <td>
+                    <select id="velocidade-personagem-select">
+    
+                        <option>normal</option>
+                        <option>lento</option>
+                        <option>rapido</option>
+    
+                </td>	
+
             </tr>
             
             
