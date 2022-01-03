@@ -108,7 +108,7 @@ function personagens(){
 }
 
 
-function Passaro(alturaJogo) {
+function Passaro(alturaJogo,subir,descer) {
     let voando = false
 
 
@@ -123,7 +123,7 @@ function Passaro(alturaJogo) {
     window.onkeyup = e => voando = false
 
     this.animar = () => {
-        const novoY = this.getY() + (voando ? 8 : -5)
+        const novoY = this.getY() + (voando ? subir : descer)
         const alturaMaxima = alturaJogo - this.elemento.clientWidth
 
         if (novoY <= 0) {
@@ -195,7 +195,7 @@ function colidiu(passaro, barreiras) {
 
 }
 
- function FlappyBird(abertura_canos, velocidade, pontuacao, intervalo_canos) {
+ function FlappyBird(abertura_canos, velocidade, pontuacao, intervalo_canos,subir,descer) {
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
     const altura = areaDoJogo.clientHeight
@@ -205,7 +205,7 @@ function colidiu(passaro, barreiras) {
     const barreiras = new Barreiras(altura, largura, abertura_canos, intervalo_canos,
         () => progresso.atualizarPontos(pontos += pontuacao))
 
-    const passaro = new Passaro(altura)
+    const passaro = new Passaro(altura,subir,descer)
 
     areaDoJogo.appendChild(progresso.elemento)
     areaDoJogo.appendChild(passaro.elemento)
@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
     const button = document.querySelector('input')
     const velocidade = document.getElementById('velocidade-select')
+    const velocidade_personagem = document.getElementById('velocidade-personagem-select')
     const pontuacao = document.getElementById('pontuacao-select')
     
     
@@ -284,6 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let valor_velocidade = 0;
         let valor_pontuacao = 1;
         let intervalo = 400;
+        let subir = 0;
+        let descer = 0;
 
 
         if(input_intervalo_normal.checked != true){
@@ -292,6 +295,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(pontuacao.value != 1){
              valor_pontuacao = (pontuacao.value == 10)? valor_pontuacao = 10: valor_pontuacao = 100
+        }
+
+
+        switch(velocidade_personagem.value){
+            
+            case 'lento':
+                subir = 4;
+                descer = -3;
+                break;
+
+            case 'normal':
+                subir = 8;
+                descer = -5;
+                break;
+    
+            case 'rapido':
+                subir = 12;
+                descer = -7;
+                break; 
         }
 
         switch(velocidade.value){
@@ -339,10 +361,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if(input_abertura_facil.checked){
-            new FlappyBird(300,valor_velocidade,valor_pontuacao,intervalo).start()
+            new FlappyBird(300,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
         }else if(input_abertura_media.checked){
-            new FlappyBird(250,valor_velocidade,valor_pontuacao,intervalo).start()
+            new FlappyBird(250,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
         }else{
-            new FlappyBird(200,valor_velocidade,valor_pontuacao, intervalo).start()
+            new FlappyBird(200,valor_velocidade,valor_pontuacao,intervalo,subir,descer).start()
         }
     } 
